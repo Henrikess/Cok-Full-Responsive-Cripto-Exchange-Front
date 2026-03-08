@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { cache, CACHE_KEYS } from '@/lib/cache/memory-cache';
 import type { OrdersResponse } from '@/types/contracts';
 
-const ORDERS_TTL = parseInt(process.env.CACHE_ORDERS_TTL ?? '20', 10);
+const ORDERS_TTL = parseInt(process.env.CACHE_ORDERS_TTL ?? '20', 10) || 20;
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
-  const page = parseInt(searchParams.get('page') ?? '1', 10);
-  const pageSize = parseInt(searchParams.get('pageSize') ?? '20', 10);
+  const rawPage = parseInt(searchParams.get('page') ?? '1', 10);
+  const rawPageSize = parseInt(searchParams.get('pageSize') ?? '20', 10);
+  const page = isNaN(rawPage) || rawPage < 1 ? 1 : rawPage;
+  const pageSize = isNaN(rawPageSize) || rawPageSize < 1 ? 20 : Math.min(rawPageSize, 100);
   const symbol = searchParams.get('symbol') ?? undefined;
   const status = searchParams.get('status') ?? undefined;
 

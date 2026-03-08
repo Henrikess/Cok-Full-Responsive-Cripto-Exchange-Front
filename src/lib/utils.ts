@@ -7,11 +7,13 @@ export function cn(...inputs: ClassValue[]): string {
 
 export function formatBRL(value: string | number): string {
   const num = typeof value === 'string' ? parseFloat(value) : value;
+  if (isNaN(num)) return 'R$ —';
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(num);
 }
 
 export function formatCrypto(value: string | number, symbol: string, decimals = 8): string {
   const num = typeof value === 'string' ? parseFloat(value) : value;
+  if (isNaN(num)) return `— ${symbol}`;
   return `${num.toFixed(decimals)} ${symbol}`;
 }
 

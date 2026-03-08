@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { cache, CACHE_KEYS } from '@/lib/cache/memory-cache';
 import type { PortfolioOverview } from '@/types/contracts';
 
-const BALANCES_TTL = parseInt(process.env.CACHE_BALANCES_TTL ?? '30', 10);
+const BALANCES_TTL = parseInt(process.env.CACHE_BALANCES_TTL ?? '30', 10) || 30;
 
 export async function GET() {
   try {

@@ -1,10 +1,17 @@
 import { SignJWT, jwtVerify } from 'jose';
 
 const AUTH_USERNAME = process.env.AUTH_USERNAME ?? 'admin';
-const AUTH_PASSWORD = process.env.AUTH_PASSWORD ?? '';
-const AUTH_SECRET = new TextEncoder().encode(
-  process.env.AUTH_SECRET ?? 'fallback-secret-change-in-production-32chars'
-);
+const AUTH_PASSWORD = process.env.AUTH_PASSWORD;
+const AUTH_SECRET_RAW = process.env.AUTH_SECRET;
+
+if (!AUTH_PASSWORD) {
+  throw new Error('AUTH_PASSWORD environment variable is required and must not be empty.');
+}
+if (!AUTH_SECRET_RAW || AUTH_SECRET_RAW.length < 32) {
+  throw new Error('AUTH_SECRET environment variable is required and must be at least 32 characters.');
+}
+
+const AUTH_SECRET = new TextEncoder().encode(AUTH_SECRET_RAW);
 const SESSION_DURATION = '8h';
 export const SESSION_COOKIE_NAME = 'mb_session';
 
