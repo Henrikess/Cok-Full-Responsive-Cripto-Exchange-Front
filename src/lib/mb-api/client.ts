@@ -24,12 +24,12 @@ function buildAuthHeaders(method: string, path: string, body: string = ''): Reco
 }
 
 async function mbFetch<T>(path: string, method = 'GET', body?: unknown): Promise<T> {
-  const bodyStr = body ? JSON.stringify(body) : '';
-  const headers = buildAuthHeaders(method, path, bodyStr);
+  const bodyStr = body ? JSON.stringify(body) : undefined;
+  const headers = buildAuthHeaders(method, path, bodyStr ?? '');
   const response = await fetch(`${MB_API_BASE_URL}${path}`, {
     method,
     headers,
-    body: bodyStr || undefined,
+    ...(bodyStr !== undefined ? { body: bodyStr } : {}),
   });
 
   if (!response.ok) {

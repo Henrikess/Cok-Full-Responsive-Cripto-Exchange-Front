@@ -3,10 +3,17 @@ import { verifySessionToken, SESSION_COOKIE_NAME } from '@/lib/auth/session';
 
 const PUBLIC_PATHS = ['/login', '/api/auth/login'];
 
+function isPublicPath(pathname: string): boolean {
+  const normalized = pathname.endsWith('/') && pathname.length > 1
+    ? pathname.slice(0, -1)
+    : pathname;
+  return PUBLIC_PATHS.includes(normalized);
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (PUBLIC_PATHS.some((p) => pathname === p || pathname === p + '/')) {
+  if (isPublicPath(pathname)) {
     return NextResponse.next();
   }
 

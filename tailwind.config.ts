@@ -13,6 +13,18 @@ const config: Config = {
         'surface-card': '#1A1A1A',
         'surface-border': '#2A2A2A',
       },
+      fontFamily: {
+        sans: [
+          'Inter',
+          'ui-sans-serif',
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          'sans-serif',
+        ],
+      },
     },
   },
   plugins: [],
