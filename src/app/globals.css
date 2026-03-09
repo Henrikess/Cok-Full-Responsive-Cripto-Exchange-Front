@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-orange: #F7931A;
+  --brand-dark: #0D0D0D;
+  --surface-card: #1A1A1A;
+  --surface-border: #2A2A2A;
+  --text-primary: #F5F5F5;
+  --text-secondary: #9CA3AF;
+}
+
+body {
+  background-color: var(--brand-dark);
+  color: var(--text-primary);
+}
+
+* {
+  box-sizing: border-box;
+}
